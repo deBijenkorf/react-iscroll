@@ -1,5 +1,4 @@
 import React from 'react'
-import deepEqual from 'deep-equal'
 
 const excludePropNames = ['defer', 'iScroll', 'onRefresh', 'options']
 
@@ -51,13 +50,22 @@ export default class ReactIScroll extends React.Component {
 
   // There is no state, we can compare only props.
   shouldComponentUpdate(nextProps, nextContext) {
-    return !deepEqual(this.props, nextProps) || !deepEqual(this.context, nextContext)
+    const currentPropsJSON = JSON.stringify(this.props);
+    const nextPropsJSON = JSON.stringify(nextProps);
+
+    const currentContextJSON = JSON.stringify(this.context);
+    const nextContextJSON = JSON.stringify(nextContext);
+
+    return currentPropsJSON !== nextPropsJSON || currentContextJSON !== nextContextJSON;
   }
 
   // Check if iScroll options has changed and recreate instance with new one
   componentDidUpdate(prevProps) {
     // If options are same, iScroll behaviour will not change. Just refresh events and trigger refresh
-    if (deepEqual(prevProps.options, this.props.options)) {
+    const currentOptionsJSON = JSON.stringify(this.props.options);
+    const prevOptionsJSON = JSON.stringify(prevProps.options);
+
+    if (currentOptionsJSON === prevOptionsJSON) {
       this._updateIScrollEvents(prevProps, this.props)
       this.refresh()
 

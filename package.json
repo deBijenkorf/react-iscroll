@@ -20,9 +20,6 @@
   },
   "main": "dist/react-iscroll.js",
   "jsnext:main": "src/react-iscroll.jsx",
-  "dependencies": {
-    "deep-equal": "1.0.1"
-  },
   "devDependencies": {
     "babel-cli": "6.8.0",
     "babel-loader": "6.2.4",
